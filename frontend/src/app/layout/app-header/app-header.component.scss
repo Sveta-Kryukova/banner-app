@@ -1,0 +1,18 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.app-header__brand {
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-header__nav a {
+  margin-left: 0.75rem;
+}
