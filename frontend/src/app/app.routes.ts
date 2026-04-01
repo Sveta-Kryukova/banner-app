@@ -1,25 +1,25 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
+import { APP_ROUTE_SEGMENTS } from "./app-paths";
 
 export const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'items',
+    path: "",
+    pathMatch: "full",
+    redirectTo: APP_ROUTE_SEGMENTS.banners,
   },
   {
-    path: 'items',
+    path: APP_ROUTE_SEGMENTS.banners,
     loadComponent: () =>
-      import('./features/item-list/item-list-page.component').then((m) => m.ItemListPageComponent),
+      import("./features/banner-list/banner-list-page.component").then(
+        (m) => m.BannerListPageComponent,
+      ),
   },
   {
-    path: 'items/new',
+    path: APP_ROUTE_SEGMENTS.bannersNew,
     loadComponent: () =>
-      import('./features/item-form/item-form-page.component').then((m) => m.ItemFormPageComponent),
+      import("./features/banner-create/banner-create-page.component").then(
+        (m) => m.BannerCreatePageComponent,
+      ),
   },
-  {
-    path: 'items/:id/edit',
-    loadComponent: () =>
-      import('./features/item-form/item-form-page.component').then((m) => m.ItemFormPageComponent),
-  },
-  { path: '**', redirectTo: 'items' },
+  { path: "**", redirectTo: '' },
 ];
