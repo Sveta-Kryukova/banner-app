@@ -1,0 +1,12 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as mix;
+
+.page {
+  @include mix.container();
+  padding-block: 1.5rem;
+}
+
+.page__lead {
+  margin: 0;
+  color: $color-text-muted;
+}

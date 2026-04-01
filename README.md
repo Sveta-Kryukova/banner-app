@@ -1,30 +1,24 @@
-# angular-nest-skeleton
+# Banner App
 
-**Отдельный проект** (не внутри `banner-crud-app`): каталог на диске  
-`/Users/svetlana/angular-nest-skeleton`
+Monorepo: Angular frontend + NestJS backend (skeleton without business routes yet).
 
-Минимальный каркас **Angular 19 + NestJS** — только архитектура, без бизнес-логики и без лишних npm-библиотек (без Material, CDK, сторонних UI).
-
-## Структура
-
-- `frontend/` — standalone Angular, lazy routes, `core` / `models` / `shared` / `layout` / `features`
-- `backend/` — NestJS, префикс `/api`, модуль `items` как заготовка CRUD
-
-## Запуск
+## Run backend
 
 ```bash
 cd backend && npm install && npm run start:dev
 ```
 
-В другом терминале:
+Listens on `http://localhost:3000` with global prefix `/api`.
+
+## Run frontend
 
 ```bash
 cd frontend && npm install && npm start
 ```
 
-Прокси: запросы с фронта на `/api` → `http://localhost:3000`.
+Open `http://localhost:4200`.
 
-## Зависимости
+## Stack
 
-- Frontend: только `@angular/*`, `rxjs`, `zone.js`, `tslib`
-- Backend: `@nestjs/common`, `@nestjs/core`, `@nestjs/platform-express`, `reflect-metadata`, `rxjs`
+- Frontend: Angular 21 (standalone, lazy routes), RxJS
+- Backend: NestJS 11, Express

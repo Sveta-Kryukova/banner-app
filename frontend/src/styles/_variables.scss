@@ -1,0 +1,33 @@
+$color-forest-dark: #283618;
+$color-olive: #606c38;
+$color-cream: #fefae0;
+$color-tan: #dda15e;
+$color-terracotta: #bc6c25;
+
+$palette: (
+  "forest-dark": $color-forest-dark,
+  "olive": $color-olive,
+  "cream": $color-cream,
+  "tan": $color-tan,
+  "terracotta": $color-terracotta,
+);
+
+$color-text: $color-forest-dark;
+$color-text-muted: color-mix(in srgb, $color-forest-dark 65%, $color-cream);
+$color-bg-page: $color-cream;
+$color-bg-elevated: #fff;
+$color-border-subtle: color-mix(in srgb, $color-olive 25%, $color-cream);
+
+$color-accent: $color-terracotta;
+$color-accent-secondary: $color-tan;
+
+$color-brand-primary: $color-olive;
+$color-brand-contrast: $color-cream;
+
+$font-family-base: "Roboto", sans-serif;
+
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+
+$shadow-soft: 0 2px 8px color-mix(in srgb, $color-forest-dark 12%, transparent);

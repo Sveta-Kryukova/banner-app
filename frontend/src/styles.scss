@@ -1,3 +1,5 @@
+@use 'styles/variables' as *;
+
 *,
 *::before,
 *::after {
@@ -8,6 +10,13 @@ html,
 body {
   height: 100%;
   margin: 0;
+  font-family: $font-family-base;
+}
+
+body {
+  line-height: 1.5;
+  color: $color-text;
+  background: $color-bg-page;
 }
 
 app-root {

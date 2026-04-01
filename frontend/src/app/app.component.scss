@@ -1,10 +1,9 @@
-.app-shell {
+.shell {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.app-main {
+.shell__main {
   flex: 1;
-  padding: 1rem;
 }
