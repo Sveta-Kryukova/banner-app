@@ -1,0 +1,142 @@
+@use "styles/variables" as *;
+
+.banner-drop {
+  @at-root :host ::ng-deep & {
+    box-sizing: border-box;
+    border: 2px dashed $color-border-subtle;
+    border-radius: $radius-md;
+    min-height: 11rem;
+    margin: 0;
+    background: color-mix(in srgb, $color-cream 40%, $color-bg-elevated);
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
+
+    &.ngx-file-drop__drop-zone--over {
+      border-color: $color-olive;
+      background: color-mix(in srgb, $color-olive 12%, $color-bg-elevated);
+    }
+  }
+
+  &__content {
+    @at-root :host ::ng-deep & {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      min-height: 11rem;
+      height: auto;
+      padding: 1rem;
+    }
+  }
+
+  &__stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  &__hit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 7rem;
+    margin: 0;
+    padding: 0.75rem;
+    border: none;
+    border-radius: $radius-sm;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    color: $color-text-muted;
+    text-align: center;
+
+    &:hover {
+      color: $color-text;
+    }
+  }
+
+  &__plus {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    color: color-mix(in srgb, $color-forest-dark 45%, $color-cream);
+  }
+
+  &__primary {
+    font-size: 0.9375rem;
+    color: $color-text;
+  }
+
+  &__hint {
+    font-size: 0.8125rem;
+    color: $color-text-muted;
+  }
+
+  &__choose {
+    @at-root :host ::ng-deep &.mat-mdc-outlined-button {
+      border-radius: 999px;
+      --mdc-outlined-button-outline-color: #{$color-accent};
+      --mdc-outlined-button-label-text-color: #{$color-accent};
+      --mat-sys-primary: #{$color-accent};
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 0.375rem;
+
+      mat-icon {
+        flex-shrink: 0;
+        margin: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1;
+      }
+    }
+  }
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__frame {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    border-radius: $radius-md;
+    overflow: hidden;
+    border: 1px solid $color-border-subtle;
+  }
+
+  &__img {
+    display: block;
+    max-width: 100%;
+    max-height: 12rem;
+    object-fit: contain;
+    vertical-align: middle;
+  }
+
+  &__clear {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+
+    ::ng-deep button.mat-mdc-icon-button {
+      background: color-mix(in srgb, $color-bg-elevated 92%, transparent);
+    }
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 0.875rem;
+    color: $color-text-muted;
+    word-break: break-all;
+  }
+}

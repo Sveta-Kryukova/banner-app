@@ -1,4 +1,5 @@
 import type { AppPath } from "../../app-paths";
+import type { NavLinkRouterActiveOptions } from "../../shared/nav-link/nav-link.types";
 
 export const MaterialSymbol = {
   List: "list",
@@ -8,7 +9,7 @@ export const MaterialSymbol = {
 export type MaterialSymbolName =
   (typeof MaterialSymbol)[keyof typeof MaterialSymbol];
 
-export type HeaderLinkActiveOptions = Readonly<{ exact: boolean }>;
+export type HeaderLinkActiveOptions = NavLinkRouterActiveOptions;
 
 export interface HeaderNavItem {
   readonly label: string;

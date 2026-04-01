@@ -1,0 +1,19 @@
+<span
+  class="app-button__wrap"
+  [matTooltip]="tooltip() ?? ''"
+  [matTooltipDisabled]="tooltipDisabled()"
+  matTooltipPosition="above"
+  matTooltipShowDelay="200"
+>
+  <button
+    matButton
+    [matButton]="matAppearance()"
+    [color]="color()"
+    [disabled]="disabled()"
+    [type]="type()"
+    [attr.form]="formId() ?? null"
+    [ngClass]="buttonClass()"
+  >
+    <ng-content />
+  </button>
+</span>

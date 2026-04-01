@@ -1,0 +1,21 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.app-button {
+  &__wrap {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+
+    button:disabled {
+      pointer-events: none;
+    }
+
+    &:has(button:disabled) {
+      cursor: help;
+    }
+  }
+}

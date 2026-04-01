@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { BannersModule } from './banners/banners.module';
 
 @Module({
-  imports: [],
+  imports: [BannersModule],
   controllers: [],
   providers: [],
 })

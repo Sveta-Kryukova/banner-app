@@ -1,0 +1,45 @@
+@use "styles/variables" as *;
+
+:host {
+  display: block;
+}
+
+.app-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: min(100vw - 2rem, 22rem);
+  max-width: 28rem;
+  padding: 0.25rem 0.25rem 0.5rem;
+
+  &__header {
+    margin: 0;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__body {
+    margin: 0;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: $color-text-muted;
+    white-space: pre-wrap;
+  }
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding-top: 0.25rem;
+  }
+}

@@ -1,0 +1,67 @@
+@let v = view();
+
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>Banner</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form
+      [id]="v.formId"
+      class="form"
+      [formGroup]="v.form"
+      (ngSubmit)="submitted.emit()"
+    >
+      <mat-form-field
+        appearance="outline"
+        class="form__field"
+        floatLabel="always"
+      >
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" autocomplete="off" />
+        @if (
+          v.form.controls.name.invalid &&
+          (v.form.controls.name.touched || v.form.controls.name.dirty)
+        ) {
+          <mat-error>Name is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="form__label" [id]="v.imageLabelId">Image *</div>
+
+      <app-banner-image-drop
+        [previewUrl]="v.previewUrl"
+        [fileName]="v.fileName"
+        [labelledBy]="v.imageLabelId"
+        (fileSelected)="fileSelected.emit($event)"
+        (clearRequested)="clearImage.emit()"
+      />
+
+      @if (v.imageError; as err) {
+        <p class="form__error" role="alert">{{ err }}</p>
+      }
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end" class="card__actions">
+    <app-button
+      variant="text"
+      type="button"
+      buttonClass="card__cancel"
+      (click)="cancelRequested.emit()"
+    >
+      Cancel
+    </app-button>
+    <app-button
+      variant="flat"
+      color="primary"
+      type="submit"
+      [formId]="v.formId"
+      [disabled]="!v.canSave || v.isSubmitting"
+      [tooltip]="v.saveDisabledTooltip"
+      [tooltipDisabled]="v.canSave && !v.isSubmitting"
+    >
+      Save
+    </app-button>
+  </mat-card-actions>
+</mat-card>

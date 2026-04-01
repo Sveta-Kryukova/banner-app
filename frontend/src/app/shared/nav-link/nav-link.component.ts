@@ -1,9 +1,25 @@
-import { ChangeDetectionStrategy, Component, input } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from "@angular/core";
+import { RouterLink, RouterLinkActive } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { RouterLink, RouterLinkActive } from "@angular/router";
-import type { NavLinkVariant } from "./nav-link.types";
+import type { AppPath } from "../../app-paths";
+import { matButtonAppearanceFromVariant } from "../ui-button/mat-button-appearance";
+import {
+  NAV_LINK_ACTIVE_CLASS,
+  appButtonVariantForNavLink,
+  type NavLinkRouterActiveOptions,
+  type NavLinkVariant,
+} from "./nav-link.types";
 
+/**
+ * In-app navigation with Material button styling: `<a matButton>` + `routerLink`.
+ * `header` adds icons + `RouterLinkActive`; `title` / `cta` share a simpler link template.
+ */
 @Component({
   selector: "app-nav-link",
   standalone: true,
@@ -14,8 +30,25 @@ import type { NavLinkVariant } from "./nav-link.types";
 })
 export class NavLinkComponent {
   readonly variant = input.required<NavLinkVariant>();
-  readonly path = input.required<string>();
+  readonly path = input.required<AppPath>();
   readonly label = input.required<string>();
   readonly icon = input<string | undefined>(undefined);
-  readonly linkExact = input(false);
+
+  readonly routerLinkActiveOptions = input<NavLinkRouterActiveOptions>({
+    exact: false,
+  });
+
+  protected readonly activeRouteClass = NAV_LINK_ACTIVE_CLASS;
+
+  protected readonly isHeaderVariant = computed(
+    () => this.variant() === "header",
+  );
+
+  protected readonly isTitleVariant = computed(
+    () => this.variant() === "title",
+  );
+
+  protected readonly matAppearance = computed(() =>
+    matButtonAppearanceFromVariant(appButtonVariantForNavLink(this.variant())),
+  );
 }

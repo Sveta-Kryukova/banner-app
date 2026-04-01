@@ -1,0 +1,30 @@
+<div
+  class="app-dialog"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="app-dialog-title"
+  aria-describedby="app-dialog-desc"
+>
+  <header class="app-dialog__header">
+    <h2 id="app-dialog-title" class="app-dialog__title">{{ data.title }}</h2>
+  </header>
+
+  <div class="app-dialog__body" id="app-dialog-desc">
+    <p class="app-dialog__text">{{ data.body }}</p>
+  </div>
+
+  <footer class="app-dialog__footer">
+    @if (data.kind === "confirm") {
+      <app-button variant="text" type="button" (click)="dismiss()">
+        {{ data.cancelLabel ?? "Cancel" }}
+      </app-button>
+      <app-button variant="flat" color="primary" type="button" (click)="confirm()">
+        {{ data.okLabel ?? "OK" }}
+      </app-button>
+    } @else {
+      <app-button variant="flat" color="primary" type="button" (click)="closeInfo()">
+        {{ data.closeLabel ?? "OK" }}
+      </app-button>
+    }
+  </footer>
+</div>

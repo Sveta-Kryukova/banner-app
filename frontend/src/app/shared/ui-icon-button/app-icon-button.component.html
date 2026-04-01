@@ -1,0 +1,10 @@
+<button
+  matIconButton
+  [type]="type()"
+  [disabled]="disabled()"
+  [attr.aria-label]="ariaLabel()"
+  [ngClass]="buttonClass()"
+  (click)="clicked.emit()"
+>
+  <ng-content />
+</button>

@@ -1,3 +1,11 @@
 <section class="page">
-  <p class="page__lead">Create banner — content coming soon.</p>
+  <h1 class="page__title">New banner</h1>
+
+  <app-banner-create-form
+    [view]="facade.formView()"
+    (submitted)="facade.onSubmit()"
+    (fileSelected)="facade.onFileSelected($event)"
+    (clearImage)="facade.onClearImage()"
+    (cancelRequested)="facade.onCancelRequested()"
+  />
 </section>
