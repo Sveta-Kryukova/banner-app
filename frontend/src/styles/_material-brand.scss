@@ -1,0 +1,54 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "variables" as v;
+
+// M3 palettes merged from Material spring-green / orange with project brand colors.
+$banner-primary: map.merge(
+  mat.$spring-green-palette,
+  (
+    25: #4a5c2c,
+    30: #4f5e2e,
+    35: #556632,
+    40: v.$color-olive,
+    50: #7a8550,
+    60: #8f9a6a,
+    70: #a6b085,
+    80: #c5ccaa,
+    90: #e2e8d4,
+    95: #eef2e8,
+    neutral: map.merge(
+      map.get(mat.$spring-green-palette, neutral),
+      (
+        10: v.$color-forest-dark,
+        98: v.$color-cream,
+        99: #fffdf7,
+        96: #f7f5e8,
+        94: #f0ede0,
+      )
+    ),
+    secondary: map.merge(
+      map.get(mat.$spring-green-palette, secondary),
+      (
+        40: v.$color-tan,
+        50: #e4b078,
+      )
+    ),
+    neutral-variant: map.merge(
+      map.get(mat.$spring-green-palette, neutral-variant),
+      (
+        30: #c5c4a8,
+        50: #8a8f7a,
+        60: #a4a892,
+      )
+    ),
+  )
+);
+
+$banner-tertiary: map.merge(
+  mat.$orange-palette,
+  (
+    40: v.$color-terracotta,
+    50: #c97f3d,
+    60: #d49556,
+  )
+);
