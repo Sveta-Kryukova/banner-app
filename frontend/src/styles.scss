@@ -1,22 +1,35 @@
-@use 'styles/variables' as *;
+@use "styles/variables" as *;
+@use "@angular/material" as mat;
+@use "styles/material-brand" as brand;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: brand.$banner-primary,
+        tertiary: brand.$banner-tertiary,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  height: 100%;
+  font-family: $font-family-base;
+  line-height: 1.5;
+  background: $color-bg-page;
+  color: $color-text;
+}
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: $font-family-base;
-}
-
-body {
-  line-height: 1.5;
-  color: $color-text;
-  background: $color-bg-page;
 }
 
 app-root {

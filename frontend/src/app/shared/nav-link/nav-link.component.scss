@@ -1,0 +1,15 @@
+@use "styles/mixins" as mix;
+
+:host {
+  display: contents;
+}
+
+.nav-link--title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+a.nav-link--active {
+  background: color-mix(in srgb, var(--mat-sys-primary-container) 85%, transparent);
+}

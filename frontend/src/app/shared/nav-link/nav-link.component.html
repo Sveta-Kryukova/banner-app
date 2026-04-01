@@ -1,0 +1,19 @@
+@if (variant() === "header") {
+  <a
+    mat-button
+    color="primary"
+    [routerLink]="path()"
+    routerLinkActive="nav-link--active"
+    [routerLinkActiveOptions]="{ exact: linkExact() }"
+    ariaCurrentWhenActive="page"
+  >
+    @if (icon()) {
+      <mat-icon aria-hidden="true">{{ icon() }}</mat-icon>
+    }
+    {{ label() }}
+  </a>
+} @else if (variant() === "title") {
+  <a mat-button color="primary" class="nav-link--title" [routerLink]="path()">{{ label() }}</a>
+} @else {
+  <a mat-flat-button color="primary" [routerLink]="path()">{{ label() }}</a>
+}

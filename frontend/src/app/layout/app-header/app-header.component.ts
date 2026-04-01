@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from "@angular/core";
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { NavLinkComponent } from "../../shared/nav-link/nav-link.component";
 import { APP_PATH } from "../../app-paths";
 import { HEADER_NAV_ITEMS, HEADER_UI } from "./app-header.config";
 
@@ -7,7 +8,7 @@ import { HEADER_NAV_ITEMS, HEADER_UI } from "./app-header.config";
   selector: "app-header",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [MatToolbarModule, NavLinkComponent],
   templateUrl: "./app-header.component.html",
   styleUrl: "./app-header.component.scss",
 })

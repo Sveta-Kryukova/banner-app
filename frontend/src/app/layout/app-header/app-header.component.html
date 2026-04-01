@@ -1,26 +1,19 @@
-<header class="app-header">
+<mat-toolbar class="app-header" color="primary">
   <div class="app-header__inner">
     <nav class="app-header__nav" [attr.aria-label]="mainNavAriaLabel()">
       @for (item of navItems; track item.path) {
-        <a
-          class="app-header__link"
-          [routerLink]="item.path"
-          routerLinkActive="app-header__link--active"
-          [routerLinkActiveOptions]="item.routerLinkActiveOptions"
-          ariaCurrentWhenActive="page"
-        >
-          <span
-            class="material-symbols-outlined app-header__icon"
-            aria-hidden="true"
-            >{{ item.icon }}</span
-          >
-          <span>{{ item.label }}</span>
-        </a>
+        <app-nav-link
+          variant="header"
+          [path]="item.path"
+          [label]="item.label"
+          [icon]="item.icon"
+          [linkExact]="item.routerLinkActiveOptions.exact"
+        />
       }
     </nav>
 
-    <a [routerLink]="homePath" class="app-header__title">{{ appTitle() }}</a>
+    <app-nav-link variant="title" [path]="homePath" [label]="appTitle()" />
 
     <div class="app-header__spacer" aria-hidden="true"></div>
   </div>
-</header>
+</mat-toolbar>

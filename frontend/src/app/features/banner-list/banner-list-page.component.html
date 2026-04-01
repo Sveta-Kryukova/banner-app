@@ -1,3 +1,11 @@
 <section class="page">
-  <p class="page__lead">Banner list — content coming soon.</p>
+  @if (banners().length === 0) {
+    <app-banner-list-empty [createPath]="createBannerPath" />
+  } @else {
+    <ul class="page__list">
+      @for (banner of banners(); track banner.id) {
+        <li class="page__list-item">{{ banner.name }}</li>
+      }
+    </ul>
+  }
 </section>
