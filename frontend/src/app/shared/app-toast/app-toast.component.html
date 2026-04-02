@@ -1,0 +1,14 @@
+<div class="app-toast" [class.app-toast--error]="data.variant === 'error'">
+  @switch (data.variant) {
+    @case ("success") {
+      <mat-icon class="app-toast__icon" aria-hidden="true">check_circle</mat-icon>
+    }
+    @case ("error") {
+      <mat-icon class="app-toast__icon" aria-hidden="true">error</mat-icon>
+    }
+    @case ("info") {
+      <mat-icon class="app-toast__icon" aria-hidden="true">info</mat-icon>
+    }
+  }
+  <span class="app-toast__message">{{ data.message }}</span>
+</div>

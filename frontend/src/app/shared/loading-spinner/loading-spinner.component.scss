@@ -1,0 +1,9 @@
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  padding-block: 3rem;
+
+  &--compact {
+    padding-block: 0;
+  }
+}

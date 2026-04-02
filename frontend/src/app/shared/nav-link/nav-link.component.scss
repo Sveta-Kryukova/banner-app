@@ -1,6 +1,24 @@
+@use "styles/variables" as *;
+
 :host {
   display: inline-flex;
   align-items: center;
+}
+
+.nav-link--card {
+  color: $color-accent !important;
+
+  &:hover {
+    background: color-mix(in srgb, $color-accent 12%, transparent) !important;
+  }
+}
+
+.nav-link__card-icon {
+  margin-inline-end: 0.25rem;
+  font-size: 1.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  vertical-align: middle;
 }
 
 a.nav-link {

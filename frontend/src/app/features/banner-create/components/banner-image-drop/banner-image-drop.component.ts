@@ -1,15 +1,18 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
   input,
   NgZone,
   output,
+  signal,
 } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { NgxFileDropEntry, NgxFileDropModule } from "ngx-file-drop";
 import { AppButtonComponent } from "../../../../shared/ui-button/app-button.component";
-import { AppIconButtonComponent } from "../../../../shared/ui-icon-button/app-icon-button.component";
+import { LoadingSpinnerComponent } from "../../../../shared/loading-spinner/loading-spinner.component";
 
 @Component({
   selector: "app-banner-image-drop",
@@ -17,9 +20,10 @@ import { AppIconButtonComponent } from "../../../../shared/ui-icon-button/app-ic
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgxFileDropModule,
+    MatButtonModule,
     MatIconModule,
     AppButtonComponent,
-    AppIconButtonComponent,
+    LoadingSpinnerComponent,
   ],
   templateUrl: "./banner-image-drop.component.html",
   styleUrl: "./banner-image-drop.component.scss",
@@ -33,6 +37,24 @@ export class BannerImageDropComponent {
 
   readonly fileSelected = output<File>();
   readonly clearRequested = output<void>();
+
+  /** False until the preview image fires `load` or `error` (stable layout while remote URL loads). */
+  protected readonly previewImageReady = signal(false);
+
+  constructor() {
+    effect(() => {
+      this.previewUrl();
+      this.previewImageReady.set(false);
+    });
+  }
+
+  protected onPreviewImageLoad(): void {
+    this.previewImageReady.set(true);
+  }
+
+  protected onPreviewImageError(): void {
+    this.previewImageReady.set(true);
+  }
 
   onFilesDropped(files: NgxFileDropEntry[]): void {
     const entry = files[0];

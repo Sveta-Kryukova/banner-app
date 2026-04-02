@@ -23,11 +23,22 @@ export class BannerImageFileService {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
-        const result = reader.result as string;
+        const result = reader.result;
+        if (typeof result !== "string") {
+          reject(new Error("FileReader returned non-string result"));
+          return;
+        }
         const idx = result.indexOf("base64,");
         resolve(idx >= 0 ? result.slice(idx + 7) : result);
       };
-      reader.onerror = () => reject(reader.error);
+      reader.onerror = () => {
+        const err = reader.error;
+        if (err instanceof Error) {
+          reject(err);
+          return;
+        }
+        reject(new Error("Failed to read file"));
+      };
       reader.readAsDataURL(file);
     });
   }
@@ -38,7 +49,48 @@ export class BannerImageFileService {
     }
   }
 
+  /** Only blob: URLs should be revoked; data URLs must not be passed to revokeObjectURL. */
+  revokePreviewIfBlob(url: string | null): void {
+    if (url?.startsWith("blob:")) {
+      URL.revokeObjectURL(url);
+    }
+  }
+
   createObjectUrl(file: File): string {
     return URL.createObjectURL(file);
+  }
+
+  dataUrlFromRawBase64(rawBase64: string): string {
+    const mime = this.detectMimeFromRawBase64(rawBase64);
+    return `data:${mime};base64,${rawBase64}`;
+  }
+
+  private detectMimeFromRawBase64(rawBase64: string): "image/jpeg" | "image/png" {
+    const bytes = this.peekBytesFromBase64(rawBase64, 8);
+    if (bytes[0] === 0xff && bytes[1] === 0xd8) {
+      return "image/jpeg";
+    }
+    if (
+      bytes[0] === 0x89 &&
+      bytes[1] === 0x50 &&
+      bytes[2] === 0x4e &&
+      bytes[3] === 0x47
+    ) {
+      return "image/png";
+    }
+    return "image/jpeg";
+  }
+
+  private peekBytesFromBase64(rawBase64: string, n: number): Uint8Array {
+    const needed = Math.ceil((n * 4) / 3);
+    const chunk = rawBase64.slice(0, needed + 4);
+    const pad = chunk.length % 4;
+    const padded = pad ? chunk + "=".repeat(4 - pad) : chunk;
+    const bin = atob(padded);
+    const out = new Uint8Array(n);
+    for (let i = 0; i < n; i++) {
+      out[i] = bin.charCodeAt(i);
+    }
+    return out;
   }
 }

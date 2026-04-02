@@ -7,7 +7,6 @@ import {
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import type { AppPath } from "../../app-paths";
 import { matButtonAppearanceFromVariant } from "../ui-button/mat-button-appearance";
 import {
   NAV_LINK_ACTIVE_CLASS,
@@ -26,7 +25,7 @@ import {
 })
 export class NavLinkComponent {
   readonly variant = input.required<NavLinkVariant>();
-  readonly path = input.required<AppPath>();
+  readonly path = input.required<string>();
   readonly label = input.required<string>();
   readonly icon = input<string | undefined>(undefined);
 
@@ -42,6 +41,10 @@ export class NavLinkComponent {
 
   protected readonly isTitleVariant = computed(
     () => this.variant() === "title",
+  );
+
+  protected readonly isCardVariant = computed(
+    () => this.variant() === "card",
   );
 
   protected readonly matAppearance = computed(() =>

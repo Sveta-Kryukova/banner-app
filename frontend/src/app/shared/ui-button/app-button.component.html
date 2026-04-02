@@ -1,19 +1,32 @@
-<span
-  class="app-button__wrap"
-  [matTooltip]="tooltip() ?? ''"
-  [matTooltipDisabled]="tooltipDisabled()"
-  matTooltipPosition="above"
-  matTooltipShowDelay="200"
->
+@if (isIconMode()) {
   <button
-    matButton
-    [matButton]="matAppearance()"
-    [color]="color()"
-    [disabled]="disabled()"
+    matIconButton
     [type]="type()"
-    [attr.form]="formId() ?? null"
+    [disabled]="disabled()"
+    [attr.aria-label]="ariaLabel() ?? ''"
     [ngClass]="buttonClass()"
+    (click)="onIconClick()"
   >
     <ng-content />
   </button>
-</span>
+} @else {
+  <span
+    class="app-button__wrap"
+    [matTooltip]="tooltip() ?? ''"
+    [matTooltipDisabled]="tooltipDisabled()"
+    matTooltipPosition="above"
+    matTooltipShowDelay="200"
+  >
+    <button
+      matButton
+      [matButton]="matAppearance()"
+      [color]="color()"
+      [disabled]="disabled()"
+      [type]="type()"
+      [attr.form]="formId() ?? null"
+      [ngClass]="buttonClass()"
+    >
+      <ng-content />
+    </button>
+  </span>
+}

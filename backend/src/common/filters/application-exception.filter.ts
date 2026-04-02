@@ -19,10 +19,11 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     const { status, message, stack } = this.normalize(exception);
+    const isServerError = isHttpServerErrorStatus(status);
 
-    if (status >= HttpStatus.INTERNAL_SERVER_ERROR) {
+    if (isServerError) {
       this.logger.error(
-        `${request.method} ${request.url} ${message}`,
+        `${request.method} ${request.url} ${formatMessageForLog(message)}`,
         stack ?? '',
       );
     } else {
@@ -53,9 +54,7 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
       return {
         status,
         message,
-        stack: status >= HttpStatus.INTERNAL_SERVER_ERROR
-          ? exception.stack
-          : undefined,
+        stack: isHttpServerErrorStatus(status) ? exception.stack : undefined,
       };
     }
     if (exception instanceof Error) {
@@ -78,4 +77,12 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
     }
     return 'Error';
   }
+}
+
+function formatMessageForLog(message: string | string[]): string {
+  return Array.isArray(message) ? message.join(', ') : message;
+}
+
+function isHttpServerErrorStatus(status: number): boolean {
+  return status >= (HttpStatus.INTERNAL_SERVER_ERROR as number);
 }

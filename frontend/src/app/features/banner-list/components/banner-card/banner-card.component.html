@@ -1,0 +1,48 @@
+<article class="banner-card" role="listitem">
+  <div class="banner-card__media">
+    @if (!imageLoadFailed()) {
+      <img
+        class="banner-card__img"
+        [src]="card().previewUrl"
+        [alt]="card().banner.name"
+        loading="lazy"
+        (error)="onImageError()"
+      />
+    } @else {
+      <div
+        class="banner-card__placeholder"
+        role="img"
+        [attr.aria-label]="'No image for ' + card().banner.name"
+      >
+        <mat-icon class="banner-card__placeholder-icon" aria-hidden="true"
+          >image</mat-icon
+        >
+      </div>
+    }
+  </div>
+  <div class="banner-card__body">
+    <h2 class="banner-card__name">{{ card().banner.name }}</h2>
+    <p class="banner-card__meta">
+      <span class="banner-card__meta-label">Updated:</span>
+      {{ card().banner.createdAt | date: "MMM d, y, h:mm a" }}
+    </p>
+    <div class="banner-card__actions">
+      <app-nav-link
+        variant="card"
+        [path]="card().editPath"
+        icon="edit"
+        label="Edit"
+      />
+      <app-button
+        variant="text"
+        buttonClass="banner-card__action"
+        (click)="deleteBanner.emit(card().banner)"
+      >
+        <mat-icon class="banner-card__action-icon" aria-hidden="true"
+          >delete_outline</mat-icon
+        >
+        Delete
+      </app-button>
+    </div>
+  </div>
+</article>
