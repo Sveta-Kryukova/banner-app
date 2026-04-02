@@ -23,7 +23,7 @@ export const BANNER_FORM_COPY = {
 
 export const BANNER_SAVE_DISABLED_TOOLTIP = {
   submitting: "Saving…",
-  nameEmpty: "Enter a name for the banner.",
+  nameEmpty: "Enter a name for the banner and download the image.",
   nameInvalid: "Fix the name (required, up to 200 characters).",
   noAttachment:
     "Add an image: drag a file into the zone or use Choose image (JPG or PNG, up to 5 MB).",
