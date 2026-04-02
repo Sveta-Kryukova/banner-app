@@ -1,12 +1,7 @@
-/**
- * Reusable helper: tooltip text explaining why a primary Save/submit action is disabled.
- * Typical flow: submitting → name → optional attachment validation error → attachment required.
- */
 export interface SaveDisabledTooltipState {
   readonly isSubmitting: boolean;
   readonly nameTrimmed: string;
   readonly nameInvalid: boolean;
-  /** e.g. file validation message; shown before the "no attachment" hint. */
   readonly attachmentError: string | null;
   readonly hasAttachment: boolean;
 }

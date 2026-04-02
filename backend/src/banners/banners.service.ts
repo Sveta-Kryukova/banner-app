@@ -1,48 +1,45 @@
-import { Injectable } from '@nestjs/common';
-import { promises as fs } from 'fs';
-import { join } from 'path';
-import { randomUUID } from 'crypto';
-
-export interface BannerEntity {
-  id: string;
-  name: string;
-  imageBase64: string;
-  createdAt: string;
-}
-
-const DATA_DIR = join(process.cwd(), 'data');
-const DATA_FILE = join(DATA_DIR, 'banners.json');
+import { Injectable } from "@nestjs/common";
+import type { BannerEntity } from "./banner.entity";
+import type { CreateBannerDto } from "./dto/create-banner.dto";
+import { BannersRepository } from "./banners.repository";
+import { sequentialBannerIds } from "./banner-id-generator";
 
 @Injectable()
 export class BannersService {
-  async findAll(): Promise<BannerEntity[]> {
-    const raw = await this.readFileRaw();
-    return JSON.parse(raw) as BannerEntity[];
+  private idSequence: Generator<number, never, void> | null = null;
+
+  constructor(private readonly bannersRepository: BannersRepository) {}
+
+  findAll(): Promise<BannerEntity[]> {
+    return this.bannersRepository.readAll();
   }
 
-  async create(dto: { name: string; imageBase64: string }): Promise<BannerEntity> {
-    const list = await this.findAll();
+  async create(dto: CreateBannerDto): Promise<BannerEntity> {
+    const list = await this.bannersRepository.readAll();
+    this.ensureIdSequence(list);
+    const { value: id } = this.idSequence!.next();
     const banner: BannerEntity = {
-      id: randomUUID(),
+      id,
       name: dto.name,
       imageBase64: dto.imageBase64,
       createdAt: new Date().toISOString(),
     };
     list.push(banner);
-    await this.writeAll(list);
+    await this.bannersRepository.writeAll(list);
     return banner;
   }
 
-  private async readFileRaw(): Promise<string> {
-    try {
-      return await fs.readFile(DATA_FILE, 'utf8');
-    } catch {
-      return '[]';
+  private ensureIdSequence(list: BannerEntity[]): void {
+    if (this.idSequence) {
+      return;
     }
+    this.idSequence = sequentialBannerIds(this.firstIdFromList(list));
   }
 
-  private async writeAll(list: BannerEntity[]): Promise<void> {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    await fs.writeFile(DATA_FILE, JSON.stringify(list, null, 2), 'utf8');
+  private firstIdFromList(list: BannerEntity[]): number {
+    const nums = list
+      .map((b) => (typeof b.id === "number" ? b.id : Number(b.id)))
+      .filter((n) => Number.isFinite(n) && n > 0);
+    return nums.length === 0 ? 1 : Math.max(...nums) + 1;
   }
 }

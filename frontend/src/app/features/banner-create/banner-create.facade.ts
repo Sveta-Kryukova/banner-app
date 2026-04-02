@@ -20,10 +20,6 @@ import type {
 import { getSaveDisabledTooltip } from "../../shared/save-disabled-tooltip/save-disabled-tooltip";
 import { BannerImageFileService } from "./services/banner-image-file.service";
 
-/**
- * Route-level orchestration: form, image preview, validation, API, navigation, dialogs.
- * Scoped to {@link BannerCreatePageComponent} via `providers` (fresh state per visit).
- */
 @Injectable()
 export class BannerCreateFacade {
   private readonly router = inject(Router);
@@ -65,7 +61,6 @@ export class BannerCreateFacade {
     );
   });
 
-  /** Single typed snapshot for the dumb {@link BannerCreateFormComponent}. */
   readonly formView = computed(
     (): BannerCreateFormViewProps => ({
       form: this.form,
@@ -106,6 +101,10 @@ export class BannerCreateFacade {
   }
 
   async onCancelRequested(): Promise<void> {
+    if (!this.hasUnsavedFormContent()) {
+      await this.router.navigateByUrl(APP_PATH.banners);
+      return;
+    }
     const ref = this.appDialog.openConfirm({
       title: BANNER_CREATE_COPY.leaveTitle,
       body: BANNER_CREATE_COPY.leaveBody,
@@ -114,6 +113,20 @@ export class BannerCreateFacade {
     if (result === true) {
       await this.router.navigateByUrl(APP_PATH.banners);
     }
+  }
+
+  private hasUnsavedFormContent(): boolean {
+    const name = this.form.controls.name.value.trim();
+    if (name.length > 0) {
+      return true;
+    }
+    if (this.selectedFile() !== null) {
+      return true;
+    }
+    if (this.imageError() !== null) {
+      return true;
+    }
+    return false;
   }
 
   async onSubmit(): Promise<void> {

@@ -11,9 +11,6 @@ import { NgxFileDropEntry, NgxFileDropModule } from "ngx-file-drop";
 import { AppButtonComponent } from "../../../../shared/ui-button/app-button.component";
 import { AppIconButtonComponent } from "../../../../shared/ui-icon-button/app-icon-button.component";
 
-/**
- * Image picker UI (ngx-file-drop + preview). Emits `File` or clear — validation lives in {@link BannerImageFileService} / facade.
- */
 @Component({
   selector: "app-banner-image-drop",
   standalone: true,

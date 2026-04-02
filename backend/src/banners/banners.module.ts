@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
-import { BannersController } from './banners.controller';
-import { BannersService } from './banners.service';
+import { Module } from "@nestjs/common";
+import { BannersController } from "./banners.controller";
+import { BannersRepository } from "./banners.repository";
+import { BannersService } from "./banners.service";
 
 @Module({
   controllers: [BannersController],
-  providers: [BannersService],
+  providers: [BannersService, BannersRepository],
 })
 export class BannersModule {}

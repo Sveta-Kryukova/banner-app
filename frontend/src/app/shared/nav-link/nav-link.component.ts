@@ -16,10 +16,6 @@ import {
   type NavLinkVariant,
 } from "./nav-link.types";
 
-/**
- * In-app navigation with Material button styling: `<a matButton>` + `routerLink`.
- * `header` adds icons + `RouterLinkActive`; `title` / `cta` share a simpler link template.
- */
 @Component({
   selector: "app-nav-link",
   standalone: true,

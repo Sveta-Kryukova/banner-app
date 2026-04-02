@@ -1,0 +1,1 @@
+export const MAX_IMAGE_BASE64_CHARS = 12 * 1024 * 1024;
