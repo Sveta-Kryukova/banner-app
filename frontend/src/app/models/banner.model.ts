@@ -1,5 +1,5 @@
 export interface Banner {
-  id: string;
+  id: number;
   name: string;
   imageBase64: string;
   createdAt: string;

@@ -1,12 +1,14 @@
-@use 'styles/variables' as *;
-@use 'styles/mixins' as mix;
+@use "styles/variables" as *;
+@use "styles/mixins" as mix;
 
 .page {
-  @include mix.container();
-  padding-block: 1.5rem;
-}
+  @include mix.container(40rem);
+  padding-block: 1.5rem 2.5rem;
 
-.page__lead {
-  margin: 0;
-  color: $color-text-muted;
+  &__title {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $color-text;
+  }
 }

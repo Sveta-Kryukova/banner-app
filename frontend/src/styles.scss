@@ -1,6 +1,7 @@
 @use "styles/variables" as *;
 @use "@angular/material" as mat;
 @use "styles/material-brand" as brand;
+@use "styles/material-mdc-button-label";
 
 html {
   height: 100%;
@@ -35,4 +36,13 @@ body {
 app-root {
   display: block;
   min-height: 100%;
+}
+
+.cdk-overlay-container {
+  .app-dialog-panel {
+    padding: 1rem 1.25rem;
+    background: $color-bg-elevated;
+    border-radius: $radius-md;
+    box-shadow: $shadow-soft;
+  }
 }

@@ -1,0 +1,60 @@
+@if (previewUrl(); as src) {
+  <div class="preview" role="group" [attr.aria-labelledby]="labelledBy()">
+    <div class="preview__frame">
+      <img class="preview__img" [src]="src" alt="" />
+      <app-icon-button
+        class="preview__clear"
+        ariaLabel="Remove image"
+        (clicked)="clear()"
+      >
+        <mat-icon>close</mat-icon>
+      </app-icon-button>
+    </div>
+    @if (fileName(); as name) {
+      <p class="preview__name">{{ name }}</p>
+    }
+  </div>
+} @else {
+  <ngx-file-drop
+    [multiple]="false"
+    accept="image/jpeg,image/png"
+    [showBrowseBtn]="false"
+    dropZoneClassName="banner-drop"
+    contentClassName="banner-drop__content"
+    (onFileDrop)="onFilesDropped($event)"
+  >
+    <ng-template
+      ngx-file-drop-content-tmp
+      let-openFileSelector="openFileSelector"
+    >
+      <div
+        class="banner-drop__stack"
+        role="group"
+        [attr.aria-labelledby]="labelledBy()"
+      >
+        <button
+          type="button"
+          class="banner-drop__hit"
+          (click)="openFileSelector()"
+        >
+          <mat-icon class="banner-drop__plus" aria-hidden="true">add</mat-icon>
+          <span class="banner-drop__primary"
+            >Drag an image here or click to browse</span
+          >
+          <span class="banner-drop__hint"
+            >Formats: JPG, PNG. Maximum size: 5 MB.</span
+          >
+        </button>
+        <app-button
+          variant="stroked"
+          type="button"
+          buttonClass="banner-drop__choose"
+          (click)="$event.stopPropagation(); openFileSelector()"
+        >
+          <mat-icon>upload_file</mat-icon>
+          Choose image
+        </app-button>
+      </div>
+    </ng-template>
+  </ngx-file-drop>
+}

@@ -2,7 +2,6 @@
 @use "@angular/material" as mat;
 @use "variables" as v;
 
-// M3 palettes merged from Material spring-green / orange with project brand colors.
 $banner-primary: map.merge(
   mat.$spring-green-palette,
   (

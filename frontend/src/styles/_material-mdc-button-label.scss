@@ -1,0 +1,10 @@
+/* Stack label / icon above ripple (align with Material FAB pattern). */
+.mat-mdc-outlined-button,
+.mat-tonal-button {
+  .mdc-button__label,
+  .mat-icon {
+    z-index: 1;
+    position: relative;
+    display: flex;
+  }
+}
