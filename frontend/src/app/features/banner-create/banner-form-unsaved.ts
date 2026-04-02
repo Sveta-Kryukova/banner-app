@@ -1,4 +1,3 @@
-/** Snapshot from server / initial edit load */
 export interface BannerInitialSnapshot {
   readonly name: string;
   readonly hadImage: boolean;

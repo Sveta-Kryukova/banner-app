@@ -7,7 +7,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "test": "ng test --watch=false"
   },
   "dependencies": {
     "@angular/animations": "^21.2.6",
@@ -27,12 +28,15 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.2.5",
+    "@angular/build": "^21.2.5",
     "@angular/cli": "^21.2.5",
     "@angular/compiler-cli": "^21.2.6",
     "@eslint/js": "^10.0.1",
     "angular-eslint": "21.3.1",
     "eslint": "^10.0.3",
+    "jsdom": "^29.0.1",
     "typescript": "~5.9.3",
-    "typescript-eslint": "8.56.1"
+    "typescript-eslint": "8.56.1",
+    "vitest": "^4.1.2"
   }
 }

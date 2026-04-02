@@ -1,7 +1,7 @@
-/** Page size for list API + infinite scroll */
 export const BANNER_LIST_PAGE_SIZE = 12;
 
 export const BANNER_LIST_COPY = {
+  pageTitle: "Banners",
   deleteTitle: "Delete this banner?",
   deleteBody: "This removes the stored banner and its image data.",
   deletedSnack: "Banner deleted",

@@ -4,14 +4,14 @@
   } @else if (facade.loadError(); as err) {
     <app-banner-list-error
       [message]="err"
-      [retryLabel]="listCopy.retry"
+      [retryLabel]="facade.ui.retry"
       (retry)="facade.reload()"
     />
   } @else if (facade.banners().length === 0) {
     <app-banner-list-empty [createPath]="facade.createBannerPath" />
   } @else {
     <header class="page__header">
-      <h1 class="page__title">Banners</h1>
+      <h1 class="page__title">{{ facade.ui.pageTitle }}</h1>
     </header>
     <div
       class="page__infinite"

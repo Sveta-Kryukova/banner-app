@@ -1,9 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
 
-/**
- * Normalizes API/network failures to a single human-readable string.
- * Matches Nest `HttpErrorBody` (`message` string or validation array).
- */
 export function parseHttpErrorMessage(error: unknown): string {
   if (error instanceof HttpErrorResponse) {
     return messageFromHttpErrorResponse(error);

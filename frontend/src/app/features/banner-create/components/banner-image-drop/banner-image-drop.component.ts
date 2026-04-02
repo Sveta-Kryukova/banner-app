@@ -38,7 +38,6 @@ export class BannerImageDropComponent {
   readonly fileSelected = output<File>();
   readonly clearRequested = output<void>();
 
-  /** False until the preview image fires `load` or `error` (stable layout while remote URL loads). */
   protected readonly previewImageReady = signal(false);
 
   constructor() {
