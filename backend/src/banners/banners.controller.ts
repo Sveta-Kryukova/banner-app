@@ -1,16 +1,12 @@
 import {
   Body,
   Controller,
-  DefaultValuePipe,
   Delete,
   Get,
   HttpCode,
   HttpStatus,
-  Param,
-  ParseIntPipe,
   Patch,
   Post,
-  Query,
 } from "@nestjs/common";
 import {
   ApiCreatedResponse,
@@ -19,9 +15,16 @@ import {
   ApiOperation,
   ApiTags,
 } from "@nestjs/swagger";
+import { ParamId, ROUTE_PARAM_ID } from "../common/http/route-params";
 import { BannerEntity } from "./banner.entity";
-import { CreateBannerDto } from "./dto/create-banner.dto";
+import {
+  QueryBannerLimit,
+  QueryBannerOffset,
+} from "./banners-query.decorators";
+import { BANNER_LIST_MAX_LIMIT } from "./banners.constants";
 import { BannersService } from "./banners.service";
+import { CreateBannerDto } from "./dto/create-banner.dto";
+import { UpdateBannerDto } from "./dto/update-banner.dto";
 
 @ApiTags("banners")
 @Controller("banners")
@@ -30,24 +33,24 @@ export class BannersController {
 
   @Get()
   @ApiOperation({
-    summary: "List banners (paginated, newest first)",
+    summary: "List banners (paginated, oldest first by id)",
   })
   @ApiOkResponse({
     description: "Paginated list: { items: BannerEntity[], total: number }",
   })
   findPage(
-    @Query("offset", new DefaultValuePipe(0), ParseIntPipe) offset: number,
-    @Query("limit", new DefaultValuePipe(12), ParseIntPipe) limit: number,
+    @QueryBannerOffset() offset: number,
+    @QueryBannerLimit() limit: number,
   ): Promise<{ items: BannerEntity[]; total: number }> {
     const safeOffset = Math.max(0, offset);
-    const safeLimit = Math.min(Math.max(1, limit), 50);
+    const safeLimit = Math.min(Math.max(1, limit), BANNER_LIST_MAX_LIMIT);
     return this.bannersService.findPage(safeOffset, safeLimit);
   }
 
-  @Get(":id")
+  @Get(`:${ROUTE_PARAM_ID}`)
   @ApiOperation({ summary: "Get one banner by id" })
   @ApiOkResponse({ description: "Banner", type: BannerEntity })
-  findOne(@Param("id", ParseIntPipe) id: number): Promise<BannerEntity> {
+  findOne(@ParamId() id: number): Promise<BannerEntity> {
     return this.bannersService.findOne(id);
   }
 
@@ -58,21 +61,21 @@ export class BannersController {
     return this.bannersService.create(dto);
   }
 
-  @Patch(":id")
+  @Patch(`:${ROUTE_PARAM_ID}`)
   @ApiOperation({ summary: "Update a banner" })
   @ApiOkResponse({ description: "Updated banner", type: BannerEntity })
   update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: CreateBannerDto,
+    @ParamId() id: number,
+    @Body() dto: UpdateBannerDto,
   ): Promise<BannerEntity> {
     return this.bannersService.update(id, dto);
   }
 
-  @Delete(":id")
+  @Delete(`:${ROUTE_PARAM_ID}`)
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: "Delete a banner" })
   @ApiNoContentResponse({ description: "Removed" })
-  async remove(@Param("id", ParseIntPipe) id: number): Promise<void> {
+  async remove(@ParamId() id: number): Promise<void> {
     await this.bannersService.remove(id);
   }
 }

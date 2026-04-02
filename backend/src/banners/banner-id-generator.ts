@@ -1,7 +1,14 @@
-export function* sequentialBannerIds(start: number): Generator<number, never, void> {
-  let n = start;
-  while (true) {
-    yield n;
-    n += 1;
+
+export class BannerIdSequence {
+  private n: number;
+
+  constructor(start: number) {
+    this.n = start;
+  }
+
+  nextId(): number {
+    const value = this.n;
+    this.n += 1;
+    return value;
   }
 }
