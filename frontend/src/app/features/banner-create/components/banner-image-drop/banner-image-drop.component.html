@@ -1,14 +1,33 @@
 @if (previewUrl(); as src) {
   <div class="preview" role="group" [attr.aria-labelledby]="labelledBy()">
     <div class="preview__frame">
-      <img class="preview__img" [src]="src" alt="" />
-      <app-icon-button
-        class="preview__clear"
-        ariaLabel="Remove image"
-        (clicked)="clear()"
+      <div
+        class="preview__media"
+        [attr.aria-busy]="!previewImageReady() ? 'true' : null"
       >
-        <mat-icon>close</mat-icon>
-      </app-icon-button>
+        @if (!previewImageReady()) {
+          <div class="preview__placeholder">
+            <app-loading-spinner [diameter]="40" [compact]="true" />
+          </div>
+        }
+        <img
+          class="preview__img"
+          [class.preview__img--loaded]="previewImageReady()"
+          [src]="src"
+          alt=""
+          (load)="onPreviewImageLoad()"
+          (error)="onPreviewImageError()"
+        />
+      </div>
+      <button
+        type="button"
+        matIconButton
+        class="preview__clear"
+        aria-label="Remove image"
+        (click)="clear()"
+      >
+        <mat-icon aria-hidden="true">close</mat-icon>
+      </button>
     </div>
     @if (fileName(); as name) {
       <p class="preview__name">{{ name }}</p>

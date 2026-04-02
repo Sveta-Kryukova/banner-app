@@ -2,6 +2,7 @@
 @use "@angular/material" as mat;
 @use "styles/material-brand" as brand;
 @use "styles/material-mdc-button-label";
+@use "styles/app-toast-panel";
 
 html {
   height: 100%;

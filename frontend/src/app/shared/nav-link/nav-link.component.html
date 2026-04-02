@@ -13,6 +13,18 @@
     }
     {{ label() }}
   </a>
+} @else if (isCardVariant()) {
+  <a
+    matButton
+    [matButton]="matAppearance()"
+    [routerLink]="path()"
+    class="nav-link nav-link--card"
+  >
+    @if (icon(); as ic) {
+      <mat-icon class="nav-link__card-icon" aria-hidden="true">{{ ic }}</mat-icon>
+    }
+    {{ label() }}
+  </a>
 } @else {
   <a
     matButton

@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import express = require('express');
+import * as express from 'express';
 import { AppModule } from './app.module';
 import { ApplicationExceptionFilter } from './common/filters/application-exception.filter';
 import { HttpLoggingInterceptor } from './common/interceptors/http-logging.interceptor';
@@ -39,7 +39,9 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('swagger', app, document, {
+    useGlobalPrefix: true,
+  });
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);

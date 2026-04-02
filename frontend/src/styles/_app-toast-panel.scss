@@ -1,0 +1,22 @@
+@use "variables" as *;
+
+.cdk-overlay-container .app-toast-panel.mat-mdc-snack-bar-container {
+  margin: 1rem !important;
+  max-width: min(28rem, calc(100vw - 2rem)) !important;
+  border-radius: $radius-md;
+  box-shadow: $shadow-soft;
+
+  &.app-toast-panel--success {
+    --mat-snack-bar-container-color: #{$color-bg-elevated};
+  }
+
+  &.app-toast-panel--error {
+    --mat-snack-bar-container-color: #{$color-bg-elevated};
+    border: 1px solid color-mix(in srgb, $color-error 40%, transparent);
+  }
+
+  &.app-toast-panel--info {
+    --mat-snack-bar-container-color: #{$color-bg-elevated};
+    border: 1px solid color-mix(in srgb, $color-olive 35%, transparent);
+  }
+}

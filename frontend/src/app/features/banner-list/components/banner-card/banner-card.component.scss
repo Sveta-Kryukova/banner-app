@@ -1,0 +1,121 @@
+@use "styles/variables" as *;
+
+.banner-card {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg-elevated;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-soft;
+  border: 1px solid $color-border-subtle;
+  transform-origin: center center;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+
+  &:hover {
+    z-index: 2;
+    transform: scale(1.1);
+    box-shadow:
+      0 8px 24px color-mix(in srgb, $color-forest-dark 18%, transparent),
+      0 2px 8px color-mix(in srgb, $color-forest-dark 10%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  &__media {
+    position: relative;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 11.25rem;
+    overflow: hidden;
+    border-radius: $radius-lg $radius-lg 0 0;
+    background: color-mix(in srgb, $color-forest-dark 8%, $color-cream);
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, $color-forest-dark 6%, $color-cream);
+    color: color-mix(in srgb, $color-text-muted 75%, $color-cream);
+  }
+
+  &__placeholder-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 3rem;
+    opacity: 0.55;
+  }
+
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem 0.875rem;
+    border-radius: 0 0 $radius-lg $radius-lg;
+    background: color-mix(in srgb, $color-cream 35%, $color-bg-elevated);
+  }
+
+  &__name {
+    margin: 0 0 0.375rem;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: $color-text;
+  }
+
+  &__meta {
+    margin: 0 0 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: $color-text-muted;
+  }
+
+  &__meta-label {
+    margin-inline-end: 0.25rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.25rem;
+
+    app-button ::ng-deep button.banner-card__action {
+      color: $color-accent !important;
+
+      &:hover {
+        background: color-mix(in srgb, $color-accent 12%, transparent) !important;
+      }
+    }
+
+    app-button ::ng-deep .banner-card__action-icon {
+      margin-inline-end: 0.25rem;
+      font-size: 1.125rem;
+      width: 1.125rem;
+      height: 1.125rem;
+      vertical-align: middle;
+    }
+  }
+}

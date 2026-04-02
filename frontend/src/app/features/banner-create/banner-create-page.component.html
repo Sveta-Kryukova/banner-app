@@ -1,11 +1,15 @@
 <section class="page">
-  <h1 class="page__title">New banner</h1>
+  @if (facade.isEditMode() && facade.isLoadingBanner()) {
+    <app-loading-spinner />
+  } @else {
+    <h1 class="page__title">{{ facade.pageTitle() }}</h1>
 
-  <app-banner-create-form
-    [view]="facade.formView()"
-    (submitted)="facade.onSubmit()"
-    (fileSelected)="facade.onFileSelected($event)"
-    (clearImage)="facade.onClearImage()"
-    (cancelRequested)="facade.onCancelRequested()"
-  />
+    <app-banner-create-form
+      [view]="facade.formView()"
+      (submitted)="facade.onSubmit()"
+      (fileSelected)="facade.onFileSelected($event)"
+      (clearImage)="facade.onClearImage()"
+      (cancelRequested)="facade.onCancelRequested()"
+    />
+  }
 </section>

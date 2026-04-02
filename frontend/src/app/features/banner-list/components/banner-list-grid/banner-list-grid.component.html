@@ -1,0 +1,5 @@
+<div class="banner-list-grid" role="list">
+  @for (row of cards(); track row.banner.id) {
+    <app-banner-card [card]="row" (deleteBanner)="deleteBanner.emit($event)" />
+  }
+</div>

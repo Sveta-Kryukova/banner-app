@@ -1,0 +1,10 @@
+<mat-card appearance="outlined" class="banner-list-error">
+  <mat-card-content>
+    <p class="banner-list-error__text">{{ message() }}</p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <app-button variant="flat" color="primary" (click)="retry.emit()">
+      {{ retryLabel() }}
+    </app-button>
+  </mat-card-actions>
+</mat-card>

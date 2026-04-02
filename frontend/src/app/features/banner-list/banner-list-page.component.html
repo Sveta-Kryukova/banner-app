@@ -1,11 +1,38 @@
 <section class="page">
-  @if (banners().length === 0) {
-    <app-banner-list-empty [createPath]="createBannerPath" />
+  @if (facade.isLoading()) {
+    <app-loading-spinner />
+  } @else if (facade.loadError(); as err) {
+    <app-banner-list-error
+      [message]="err"
+      [retryLabel]="listCopy.retry"
+      (retry)="facade.reload()"
+    />
+  } @else if (facade.banners().length === 0) {
+    <app-banner-list-empty [createPath]="facade.createBannerPath" />
   } @else {
-    <ul class="page__list">
-      @for (banner of banners(); track banner.id) {
-        <li class="page__list-item">{{ banner.name }}</li>
+    <header class="page__header">
+      <h1 class="page__title">Banners</h1>
+    </header>
+    <div
+      class="page__infinite"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="400"
+      [scrollWindow]="true"
+      [infiniteScrollDisabled]="
+        !facade.hasMore() || facade.isLoadingMore()
+      "
+      (scrolled)="facade.loadMore()"
+    >
+      <app-banner-list-grid
+        [cards]="facade.bannerCards()"
+        (deleteBanner)="facade.onDeleteClick($event)"
+      />
+      @if (facade.isLoadingMore()) {
+        <div class="page__load-more" aria-busy="true" aria-live="polite">
+          <mat-spinner diameter="36" />
+        </div>
       }
-    </ul>
+    </div>
   }
 </section>

@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { APP_ROUTE_SEGMENTS } from "./app-paths";
+import { APP_ROUTE_BANNER_EDIT_PATTERN, APP_ROUTE_SEGMENTS } from "./app-paths";
 
 export const routes: Routes = [
   {
@@ -21,5 +21,12 @@ export const routes: Routes = [
         (m) => m.BannerCreatePageComponent,
       ),
   },
-  { path: "**", redirectTo: '' },
+  {
+    path: APP_ROUTE_BANNER_EDIT_PATTERN,
+    loadComponent: () =>
+      import("./features/banner-create/banner-create-page.component").then(
+        (m) => m.BannerCreatePageComponent,
+      ),
+  },
+  { path: "**", redirectTo: APP_ROUTE_SEGMENTS.banners },
 ];
