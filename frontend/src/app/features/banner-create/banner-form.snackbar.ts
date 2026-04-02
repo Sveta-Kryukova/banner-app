@@ -9,6 +9,8 @@ export type BannerFormSnackKind =
   | "updateError"
   | "notFound";
 
+const SUCCESS_KINDS = new Set<BannerFormSnackKind>(["created", "updated"]);
+
 const SNACK_BY_KIND: Record<
   BannerFormSnackKind,
   { message: string; duration: number }
@@ -41,7 +43,7 @@ export class BannerFormSnackBar {
 
   show(kind: BannerFormSnackKind): void {
     const c = SNACK_BY_KIND[kind];
-    if (kind === "created" || kind === "updated") {
+    if (SUCCESS_KINDS.has(kind)) {
       this.toast.success(c.message, c.duration);
     } else {
       this.toast.error(c.message, c.duration);

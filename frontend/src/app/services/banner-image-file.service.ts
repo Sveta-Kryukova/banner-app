@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const ACCEPT_TYPES = new Set(["image/jpeg", "image/png"]);
@@ -19,37 +20,34 @@ export class BannerImageFileService {
     return { ok: true };
   }
 
-  fileToRawBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
+  fileToRawBase64$(file: File): Observable<string> {
+    return new Observable<string>((subscriber) => {
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result;
         if (typeof result !== "string") {
-          reject(new Error("FileReader returned non-string result"));
+          subscriber.error(
+            new Error("FileReader returned non-string result"),
+          );
           return;
         }
         const idx = result.indexOf("base64,");
-        resolve(idx >= 0 ? result.slice(idx + 7) : result);
+        subscriber.next(idx >= 0 ? result.slice(idx + 7) : result);
+        subscriber.complete();
       };
       reader.onerror = () => {
         const err = reader.error;
-        if (err instanceof Error) {
-          reject(err);
-          return;
-        }
-        reject(new Error("Failed to read file"));
+        subscriber.error(
+          err instanceof Error ? err : new Error("Failed to read file"),
+        );
       };
       reader.readAsDataURL(file);
+      return () => {
+        reader.abort();
+      };
     });
   }
 
-  revokeObjectUrl(url: string | null): void {
-    if (url) {
-      URL.revokeObjectURL(url);
-    }
-  }
-
-  /** Only blob: URLs should be revoked; data URLs must not be passed to revokeObjectURL. */
   revokePreviewIfBlob(url: string | null): void {
     if (url?.startsWith("blob:")) {
       URL.revokeObjectURL(url);

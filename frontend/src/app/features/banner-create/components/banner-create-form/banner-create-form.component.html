@@ -18,7 +18,7 @@
         floatLabel="always"
       >
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" autocomplete="off" />
+        <input matInput formControlName="name" autocomplete="off" required />
         @if (
           v.form.controls.name.invalid &&
           (v.form.controls.name.touched || v.form.controls.name.dirty)

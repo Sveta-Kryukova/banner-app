@@ -10,9 +10,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
   styleUrl: "./loading-spinner.component.scss",
 })
 export class LoadingSpinnerComponent {
-  /** Material spinner size in pixels. */
   readonly diameter = input<number>(40);
 
-  /** Tight padding for inline placeholders (e.g. image preview). */
   readonly compact = input(false);
 }

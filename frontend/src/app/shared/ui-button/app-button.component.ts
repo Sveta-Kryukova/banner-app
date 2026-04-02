@@ -28,10 +28,6 @@ export class AppButtonComponent {
 
   private readonly hostIsIconTag = this.hostTag === "app-icon-button";
 
-  /**
-   * `auto` — icon mode for `<app-icon-button>`, standard for `<app-button>`.
-   * Override for tests or when the host tag is not available.
-   */
   readonly mode = input<AppButtonMode>("auto");
 
   protected readonly isIconMode = computed(() => {
@@ -56,7 +52,6 @@ export class AppButtonComponent {
   readonly formId = input<string | null>(null);
   readonly buttonClass = input<string | undefined>(undefined);
 
-  /** Required for accessible icon buttons (`<app-icon-button>`). */
   readonly ariaLabel = input<string | undefined>(undefined);
 
   readonly clicked = output<void>();

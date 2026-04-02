@@ -3,16 +3,11 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import type { Banner } from "../models/banner.model";
-
-export interface BannerListPageResponse {
-  items: Banner[];
-  total: number;
-}
-
-export interface CreateBannerPayload {
-  name: string;
-  imageBase64: string;
-}
+import type {
+  BannerListPageResponse,
+  CreateBannerPayload,
+  UpdateBannerPayload,
+} from "../models/api/banner-api.model";
 
 @Injectable({ providedIn: "root" })
 export class BannerApiService {
@@ -36,7 +31,7 @@ export class BannerApiService {
     return this.http.get<Banner>(`${this.base}/${id}`);
   }
 
-  update(id: number, payload: CreateBannerPayload): Observable<Banner> {
+  update(id: number, payload: UpdateBannerPayload): Observable<Banner> {
     return this.http.patch<Banner>(`${this.base}/${id}`, payload);
   }
 
