@@ -1,24 +1,23 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import { expectFound, expectFoundIndex } from "../common/assert/expect-found";
+import { BannerIdSequence } from "./banner-id-generator";
 import type { BannerEntity } from "./banner.entity";
-import type { CreateBannerDto } from "./dto/create-banner.dto";
 import { BannersRepository } from "./banners.repository";
-import { sequentialBannerIds } from "./banner-id-generator";
+import type { CreateBannerDto } from "./dto/create-banner.dto";
+import type { UpdateBannerDto } from "./dto/update-banner.dto";
 
 @Injectable()
 export class BannersService {
-  private idSequence: Generator<number, never, void> | null = null;
+  private idSequence: BannerIdSequence | null = null;
 
   constructor(private readonly bannersRepository: BannersRepository) {}
 
-  /**
-   * Newest first (by id). Offset/limit for infinite scroll; limit capped in controller.
-   */
   async findPage(
     offset: number,
     limit: number,
   ): Promise<{ items: BannerEntity[]; total: number }> {
     const all = await this.bannersRepository.readAll();
-    const sorted = [...all].sort((a, b) => b.id - a.id);
+    const sorted = [...all].sort((a, b) => a.id - b.id);
     const total = sorted.length;
     const items = sorted.slice(offset, offset + limit);
     return { items, total };
@@ -26,17 +25,13 @@ export class BannersService {
 
   async findOne(id: number): Promise<BannerEntity> {
     const list = await this.bannersRepository.readAll();
-    const banner = list.find((b) => b.id === id);
-    if (!banner) {
-      throw new NotFoundException(`Banner ${id} not found`);
-    }
-    return banner;
+    return expectFound(list.find((b) => b.id === id));
   }
 
   async create(dto: CreateBannerDto): Promise<BannerEntity> {
     const list = await this.bannersRepository.readAll();
     this.ensureIdSequence(list);
-    const { value: id } = this.idSequence!.next();
+    const id = this.idSequence!.nextId();
     const banner: BannerEntity = {
       id,
       name: dto.name,
@@ -48,12 +43,9 @@ export class BannersService {
     return banner;
   }
 
-  async update(id: number, dto: CreateBannerDto): Promise<BannerEntity> {
+  async update(id: number, dto: UpdateBannerDto): Promise<BannerEntity> {
     const list = await this.bannersRepository.readAll();
-    const idx = list.findIndex((b) => b.id === id);
-    if (idx === -1) {
-      throw new NotFoundException(`Banner ${id} not found`);
-    }
+    const idx = expectFoundIndex(list.findIndex((b) => b.id === id));
     const updated: BannerEntity = {
       ...list[idx],
       name: dto.name,
@@ -66,24 +58,22 @@ export class BannersService {
 
   async remove(id: number): Promise<void> {
     const list = await this.bannersRepository.readAll();
-    const next = list.filter((b) => b.id !== id);
-    if (next.length === list.length) {
-      throw new NotFoundException(`Banner ${id} not found`);
-    }
-    await this.bannersRepository.writeAll(next);
+    expectFound(list.find((b) => b.id === id));
+    await this.bannersRepository.writeAll(list.filter((b) => b.id !== id));
   }
 
   private ensureIdSequence(list: BannerEntity[]): void {
     if (this.idSequence) {
       return;
     }
-    this.idSequence = sequentialBannerIds(this.firstIdFromList(list));
+    this.idSequence = new BannerIdSequence(this.nextIdAfterMax(list));
   }
 
-  private firstIdFromList(list: BannerEntity[]): number {
-    const nums = list
-      .map((b) => (typeof b.id === "number" ? b.id : Number(b.id)))
-      .filter((n) => Number.isFinite(n) && n > 0);
-    return nums.length === 0 ? 1 : Math.max(...nums) + 1;
+  private nextIdAfterMax(list: BannerEntity[]): number {
+    if (list.length === 0) {
+      return 1;
+    }
+    const maxId = list.reduce((m, b) => Math.max(m, b.id), 0);
+    return maxId + 1;
   }
 }

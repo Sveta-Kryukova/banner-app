@@ -12,7 +12,7 @@ export class CreateBannerDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(200)
-  name!: string;
+  name: string = "";
 
   @ApiProperty({
     description: "Image as raw base64 (no data: prefix)",
@@ -22,5 +22,5 @@ export class CreateBannerDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(MAX_IMAGE_BASE64_CHARS)
-  imageBase64!: string;
+  imageBase64: string = "";
 }

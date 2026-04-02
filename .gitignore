@@ -1,5 +1,10 @@
 /node_modules
 
+# Build output
+frontend/dist/
+frontend/.angular/
+backend/dist/
+
 # OS
 .DS_Store
 Thumbs.db

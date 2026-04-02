@@ -1,1 +1,5 @@
 export const MAX_IMAGE_BASE64_CHARS = 12 * 1024 * 1024;
+
+export const BANNER_LIST_DEFAULT_OFFSET = 0;
+export const BANNER_LIST_DEFAULT_LIMIT = 12;
+export const BANNER_LIST_MAX_LIMIT = 50;
